@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-deployment
+  namespace: practice
+  labels:
+    app: simple-crud-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: crudapp
+  template:
+    metadata:
+      labels:
+        app: crudapp
+    spec:
+      containers:
+      - name: simple-crud-app
+        image: hadargendelman/simple-crud-app:latest
+        resources:
+          limits:
+            cpu: "1"
+          requests:
+            cpu: "0.5"
+        ports:
+        - name: http
+          containerPort: 80
+        imagePullPolicy: IfNotPresent
+      nodeSelector:
+        kubernetes.io/os: windows
+    
